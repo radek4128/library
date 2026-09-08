@@ -1,0 +1,59 @@
+body, div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+
+table {
+  border-collapse: collapse;
+  border: 2px solid rgb(200,200,200);
+  border-radius: 5px;
+  letter-spacing: 1px;
+  font-size: 0.8rem;
+  overflow: hidden;
+}
+
+
+td, th {
+    border: 1px solid rgb(113, 112, 112);
+    margin: 0;
+    padding: 7px 15px;
+}
+
+tr:nth-child(odd) td {
+  background-color: rgb(221, 221, 221);;
+}
+
+tr:nth-child(even) td {
+  background-color: rgb(240,240,240);
+}
+
+tr td:not(:first-child) {
+    font-size: 14px;
+}
+
+th {
+    background-color: rgb(162, 150, 114);
+    font-size: 15px;
+}
+
+.add_button {
+    margin-top: 30px;
+    padding: 10px 15px;
+    background-color: rgb(162, 150, 114);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+}
+
+button:hover {
+    opacity: 0.9
+}
+
+.add_button:active {
+    box-shadow: 0 0 0 1px #000000;
+}

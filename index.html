@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="content">
+    <table id="table">
+      <tr>
+        <th>Book ID</th>
+        <th>Book Name</th>
+        <th>Author</th>
+        <th>Pages</th>
+        <th>Read Status</th>
+      </tr>
+    </table>
+    <button class="add_button" commandfor="new_book_dialog" command="show-modal">Add Book</button>
+    <dialog id="new_book_dialog">
+      <p>Add new book</p>
+      <button commandfor="new_book_dialog" command="close"> Close</button>
+      <button>Add</button>
+    </dialog>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
