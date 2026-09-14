@@ -1,6 +1,6 @@
 const myLibrary = [];
 
-function book(title, author, pages, read) {
+function Book(title, author, pages, read) {
   this.id = crypto.randomUUID();
   this.title = title;
   this.author = author;
@@ -18,7 +18,7 @@ function book(title, author, pages, read) {
 }
 
 function addBookToLibrary(title, author, pages, read) {
-  const newBook = new book(title, author, pages, read);
+  const newBook = new Book(title, author, pages, read);
   myLibrary.push(newBook);
 }
 
@@ -28,25 +28,39 @@ addBookToLibrary("Think and grow rich", "Napoleon Hill", 512, true);
 addBookToLibrary("Scripts of the damned", "Becky", 884, false);
 
 
-const table = document.getElementById("table");
+const table = document.querySelector("tbody");
+
+function addCell(book) {
+  lastRowCells = table.lastChild.cells
+  if (lastRowCells) {
+    stringIndex = lastRowCells[0].innerText
+    index = Number(stringIndex)
+    index += 1
+  } else {
+    index = 1
+  }
+
+  const row = table.insertRow();
+  const idCell = row.insertCell(0);
+  const nameCell = row.insertCell(1);
+  const authorCell = row.insertCell(2);
+  const pagesCell = row.insertCell(3);
+  const statusCell = row.insertCell(4);
+
+  idCell.innerText = index;
+  index += 1;
+
+  nameCell.innerText = book.title;
+  authorCell.innerText = book.author;
+  pagesCell.innerText = book.pages;
+  statusCell.innerText = book.readStatus;
+}
 
 function updateTable(library) {
   library.forEach(book => {
-    const table_row = document.createElement("tr");
-    table.appendChild(table_row);
-    console.log(book.author)
-    for (const prop in book) {
-      const property = book[prop];
-      if (typeof(property) === "string" || typeof(property) === "number") {
-        const row_elem = document.createElement("td");
-        row_elem.textContent = property;
-        table_row.appendChild(row_elem);
-      }
-    }
+    addCell(book)
   })
 }
-
-updateTable(myLibrary);
 
 const bookForm = document.querySelector("#book-form");
 const submitter = document.querySelector(".form-submit");
@@ -64,10 +78,10 @@ function formToTable(e) {
     formData.get("read") === "true"
   );
 
-  updateTable(myLibrary.slice(-1));
+  addCell(myLibrary.at(-1));
   dialog.close();
 }
 
-bookForm.addEventListener("submit", formToTable);
 
-const addBtn = document.querySelector(".add-button");
+bookForm.addEventListener("submit", formToTable);
+updateTable(myLibrary);
