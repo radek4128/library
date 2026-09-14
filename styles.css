@@ -1,4 +1,4 @@
-body, div {
+body, .content {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -40,7 +40,13 @@ th {
     font-size: 15px;
 }
 
-.add_button {
+dialog {
+    border: solid 1px rgb(174, 174, 174);
+    border-radius: 5px;
+    background-color: rgb(233, 233, 233);
+}
+
+.add-button {
     margin-top: 30px;
     padding: 10px 15px;
     background-color: rgb(162, 150, 114);
@@ -54,6 +60,52 @@ button:hover {
     opacity: 0.9
 }
 
-.add_button:active {
+.add-button:active {
     box-shadow: 0 0 0 1px #000000;
+}
+
+form button,
+input,
+select,
+label {
+  font-family: inherit;
+  font-size: 100%;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  width: 170px;
+  display: inline-block
+}
+
+legend {
+    font-weight: 600;
+    font-size: 18px;
+}
+form p {
+    display: flex;
+    align-items: center;
+}
+
+.form-submit {
+    width: 100%;
+    padding: 7px 0;
+    margin-bottom: 15px;
+    margin-top: 20px;
+    background-color: rgb(162, 150, 114);
+    border: 1px solid rgb(162, 150, 114);
+    border-radius: 5px;
+
+}
+
+.form-cancel {
+    margin: 0 auto;
+}
+
+input {
+    padding: 0 2px;
+}
+
+.dialog-buttons {
+    display: flex;
+    justify-content: center;
 }
