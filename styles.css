@@ -109,3 +109,22 @@ input {
     display: flex;
     justify-content: center;
 }
+
+.delete-cell {
+    text-align: center;
+}
+
+.book-del-btn {
+    border: none;
+    background-color: #00000000;
+    padding: 5px;
+    border-radius: 50%;
+}
+
+.book-del-btn img {
+    pointer-events: none;
+}
+
+.book-del-btn:hover {
+    background-color: #00000016;
+}

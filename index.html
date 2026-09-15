@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
   <div class="content">
     <table id="table">
@@ -15,6 +17,18 @@
         <th>Author</th>
         <th>Pages</th>
         <th>Read Status</th>
+        <th>Delete</th>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Scripts of the damned</td>
+        <td>Becky</td>
+        <td>884</td>
+        <td>Not read</td>
+        <td class="delete-cell">
+          <button class="book-del-btn" data-id="c95dbfe8-3961-45be-a00f-8131535d17ee">
+        </button>
+        </td>
       </tr>
     </table>
     <button class="add-button" commandfor="book-dialog" command="show-modal">Add Book</button>
@@ -23,7 +37,7 @@
         <legend>Add new book</legend>
         <p>
           <label for="book-name">Book name:</label>
-          <input type="text" id="book-name" name="book-name" required >
+          <input type="text" id="book-name" name="book-name" required>
         </p>
         <p>
           <label for="author">Author:</label>
@@ -51,4 +65,5 @@
   </div>
   <script src="script.js"></script>
 </body>
+
 </html>

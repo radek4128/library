@@ -1,4 +1,4 @@
-const myLibrary = [];
+let myLibrary = [];
 
 function Book(title, author, pages, read) {
   this.id = crypto.randomUUID();
@@ -46,6 +46,7 @@ function addCell(book) {
   const authorCell = row.insertCell(2);
   const pagesCell = row.insertCell(3);
   const statusCell = row.insertCell(4);
+  const deleteCell = row.insertCell(5);
 
   idCell.innerText = index;
   index += 1;
@@ -54,13 +55,31 @@ function addCell(book) {
   authorCell.innerText = book.author;
   pagesCell.innerText = book.pages;
   statusCell.innerText = book.readStatus;
+
+  const delButton = document.createElement("button");
+  delButton.innerHTML = "<img src='cross.svg' alt='' height='25'>";
+  delButton.className = "book-del-btn";
+  delButton.setAttribute("data-id", book.id);
+  delButton.addEventListener("click", (e) => {
+    removeBook(e)
+  })
+
+  deleteCell.append(delButton);
+  deleteCell.className = "delete-cell"
 }
 
 function updateTable(library) {
+  const numOfRows = table.childElementCount;
+
+  for (let i = numOfRows - 1; i > 0 ; i--) {
+    table.deleteRow(i);
+  }
   library.forEach(book => {
     addCell(book)
   })
 }
+
+/// Processing user's input from Add Book form
 
 const bookForm = document.querySelector("#book-form");
 const submitter = document.querySelector(".form-submit");
@@ -79,8 +98,16 @@ function formToTable(e) {
   );
 
   addCell(myLibrary.at(-1));
+  bookForm.reset()
   dialog.close();
 }
+
+function removeBook(event) {
+  const bookId = event.srcElement.attributes["data-id"].value;
+  myLibrary = myLibrary.filter((book) => book.id != bookId);
+  updateTable(myLibrary)
+}
+
 
 
 bookForm.addEventListener("submit", formToTable);
