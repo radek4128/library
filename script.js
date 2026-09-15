@@ -7,14 +7,23 @@ function Book(title, author, pages, read) {
   this.pages = pages;
   this.read = read;
 
-  if (this.read === true) {
-    this.readStatus = 'Already read';
-  } else {
-    this.readStatus = 'Not read';
+  this.setStatus = function () {
+    if (this.read === true) {
+      this.readStatus = 'Already read';
+    } else {
+      this.readStatus = 'Not read';
+    }
+    this.info = function() {
+      return `${this.title} by ${this.author}, ${pages} pages, ${this.readStatus}`;
+    }
   }
-  this.info = function() {
-    return `${this.title} by ${this.author}, ${pages} pages, ${this.readStatus}`;
-  }
+  this.setStatus();
+}
+
+Book.prototype.changeStatus = function() {
+  this.read = !this.read;
+  this.setStatus();
+  updateTable(myLibrary);
 }
 
 function addBookToLibrary(title, author, pages, read) {
@@ -30,7 +39,9 @@ addBookToLibrary("Scripts of the damned", "Becky", 884, false);
 
 const table = document.querySelector("tbody");
 
-function addCell(book) {
+function addRow(book) {
+
+  // Read last row index, if none set index to 1
   lastRowCells = table.lastChild.cells
   if (lastRowCells) {
     stringIndex = lastRowCells[0].innerText
@@ -40,13 +51,27 @@ function addCell(book) {
     index = 1
   }
 
+  // Create buttons for last 2 cells
+  const delButton = document.createElement("button");
+  delButton.innerHTML = "<img src='cross.svg' alt='' height='25'>";
+  delButton.className = "book-del-btn";
+  delButton.setAttribute("data-id", book.id);
+  delButton.addEventListener("click", removeBook);
+
+  const statusButton = document.createElement("button");
+  statusButton.innerText = "Change Status";
+  statusButton.className = "status-btn";
+  statusButton.setAttribute("data-id", book.id);
+  statusButton.addEventListener("click", changeReadStatus)
+
   const row = table.insertRow();
   const idCell = row.insertCell(0);
   const nameCell = row.insertCell(1);
   const authorCell = row.insertCell(2);
   const pagesCell = row.insertCell(3);
   const statusCell = row.insertCell(4);
-  const deleteCell = row.insertCell(5);
+  const changeStatusCell = row.insertCell(5);
+  const deleteCell = row.insertCell(6);
 
   idCell.innerText = index;
   index += 1;
@@ -55,17 +80,10 @@ function addCell(book) {
   authorCell.innerText = book.author;
   pagesCell.innerText = book.pages;
   statusCell.innerText = book.readStatus;
-
-  const delButton = document.createElement("button");
-  delButton.innerHTML = "<img src='cross.svg' alt='' height='25'>";
-  delButton.className = "book-del-btn";
-  delButton.setAttribute("data-id", book.id);
-  delButton.addEventListener("click", (e) => {
-    removeBook(e)
-  })
-
+  changeStatusCell.append(statusButton);
+  changeStatusCell.className = "btn-cell";
   deleteCell.append(delButton);
-  deleteCell.className = "delete-cell"
+  deleteCell.className = "btn-cell";
 }
 
 function updateTable(library) {
@@ -75,7 +93,7 @@ function updateTable(library) {
     table.deleteRow(i);
   }
   library.forEach(book => {
-    addCell(book)
+    addRow(book)
   })
 }
 
@@ -97,7 +115,7 @@ function formToTable(e) {
     formData.get("read") === "true"
   );
 
-  addCell(myLibrary.at(-1));
+  addRow(myLibrary.at(-1));
   bookForm.reset()
   dialog.close();
 }
@@ -108,7 +126,11 @@ function removeBook(event) {
   updateTable(myLibrary)
 }
 
-
+function changeReadStatus(event) {
+  const bookId = event.srcElement.attributes["data-id"].value;
+  book = myLibrary.filter((book) => book.id === bookId);
+  book[0].changeStatus();
+}
 
 bookForm.addEventListener("submit", formToTable);
 updateTable(myLibrary);
